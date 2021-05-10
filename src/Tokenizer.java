@@ -1,10 +1,9 @@
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
 public class Tokenizer {
     String program;
     Stack<Character> pushdownAutomata;
-    ArrayList<TokenType> tokens;
+    ArrayList<Pair<TokenType, String>> tokens;
 
     public Tokenizer(String program){
         this.program = program;
@@ -17,10 +16,10 @@ public class Tokenizer {
             pushdownAutomata = new Stack<>();
             if(l.startsWith("CHECK ")){
                 //System.out.println("Check statement");
-                tokens.add(TokenType.CHECK);
+                tokens.add(new Pair<>(TokenType.CHECK, "CHECK"));
             } else if(l.startsWith("SET ")){
                 //System.out.println("Set statement");
-                tokens.add(TokenType.SET);
+                tokens.add(new Pair<>(TokenType.SET, "SET"));
             } else if(l.isEmpty()){
                 //System.out.println("Empty Line");
             } else {
@@ -50,13 +49,13 @@ public class Tokenizer {
                     return isExpression(expr.substring(1));
                 case '(':
                     pushdownAutomata.push('P');
-                    tokens.add(TokenType.LEFT_PAREN);
+                    tokens.add(new Pair<>(TokenType.LEFT_PAREN, "("));
                     return isExpression(expr.substring(1));
                 case ')': //fix this
                     //System.out.println(") detected");
                     if(pushdownAutomata.peek() == 'P'){
                         pushdownAutomata.pop();
-                        tokens.add(TokenType.RIGHT_PAREN);
+                        tokens.add(new Pair<>(TokenType.RIGHT_PAREN, ")"));
                         return isExpression(expr.substring(1));
                     } else {
                         return false;
@@ -70,7 +69,7 @@ public class Tokenizer {
                         //System.out.println("matches: " + match);
                         if(match){
                             pushdownAutomata.push('S');
-                            tokens.add(TokenType.PRODUCTION);
+                            tokens.add(new Pair<>(TokenType.PRODUCTION, expr.substring(1, expr.indexOf("'", 2))));
                             return isExpression(expr.substring(expr.indexOf('\'', 1)));
                         } else {
                             return false;
@@ -81,8 +80,9 @@ public class Tokenizer {
                     }
                 default:
                     if(expr.matches("^[A-Z]+ .*")){
-                        tokens.add(TokenType.IDENTIFIER);
-                        return isExpression(expr.substring(expr.indexOf(' ', 1)));
+                        //System.out.println("DEBUG: " + expr.substring(0, expr.indexOf(" ", 1)));
+                        tokens.add(new Pair<>(TokenType.IDENTIFIER, expr.substring(0, expr.indexOf(" ", 1))));
+                        return isExpression(expr.substring(expr.indexOf(" ", 1)));
                     } else {
                         return false;
                     }
