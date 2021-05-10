@@ -8,6 +8,7 @@ public class Tokenizer {
 
     public Tokenizer(String program){
         this.program = program;
+        tokens = new ArrayList<>();
     }
 
     public void launch(){
@@ -15,23 +16,25 @@ public class Tokenizer {
         for(String l : program.split("\n")) {
             pushdownAutomata = new Stack<>();
             if(l.startsWith("CHECK ")){
-                System.out.println("Check statement");
+                //System.out.println("Check statement");
                 tokens.add(TokenType.CHECK);
             } else if(l.startsWith("SET ")){
-                System.out.println("Set statement");
+                //System.out.println("Set statement");
                 tokens.add(TokenType.SET);
             } else if(l.isEmpty()){
-                System.out.println("Empty Line");
+                //System.out.println("Empty Line");
             } else {
                 if(!isExpression(l)){
                     System.out.println("Syntax Error on Line #" + line);
                     System.exit(1);
                 } else {
-                    System.out.println("Expression statement");
+                    //System.out.println("Expression statement");
                 }
             }
             line++;
         }
+        Parser parser = new Parser(tokens);
+        parser.launch();
     }
 
     public boolean isExpression(String expr){

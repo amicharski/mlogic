@@ -1,2 +1,1 @@
 ('a' OR 'b') AND 'a'
-NOT 'a' 'n' OR NOT ('b' AND 'c')
