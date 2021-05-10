@@ -1,6 +1,6 @@
 <iden>  :=  [Upper]
 
-<prod>  :=  '[Alphanumeric]'
+<prod>  :=  '[Lower]'
 
 <expr>  :=  (<expr>)
         |   TRUE

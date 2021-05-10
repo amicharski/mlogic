@@ -1,5 +1,1 @@
-
-
-SET 'a' TRUE
-'a' AND 'b'
-CHECK 'b'
+('a' OR 'b') AND 'a'
