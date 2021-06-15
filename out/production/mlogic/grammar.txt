@@ -10,6 +10,7 @@
         |   <expr> OR <expr>
         |   NOT <expr>
         |   <expr> <iden> <expr>
+        |   <iden> <expr>
 
 <stmt>  :=  <expr> [NewLine] <stmt>
         |   SET <prod> <expr> [NewLine] <stmt>

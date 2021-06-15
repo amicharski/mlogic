@@ -1,1 +1,7 @@
-('a' OR 'b') AND 'a'
+#implies function declaration
+SET 'impl' NOT 'a' OR 'b'
+
+#example of using implies
+'c' IMPL 'd'
+SET 'c' TRUE
+CHECK 'd'

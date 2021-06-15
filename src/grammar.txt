@@ -2,6 +2,9 @@
 
 <prod>  :=  '[Lower]'
 
+<func>  :=  SET <prod> <expr>
+        |   CHECK <prod>
+
 <expr>  :=  (<expr>)
         |   TRUE
         |   FALSE
@@ -10,10 +13,10 @@
         |   <expr> OR <expr>
         |   NOT <expr>
         |   <expr> <iden> <expr>
+        |   <iden> <expr>
 
 <stmt>  :=  <expr> [NewLine] <stmt>
-        |   SET <prod> <expr> [NewLine] <stmt>
-        |   CHECK <prod> [NewLine] <stmt>
+        |   <func> [NewLine] <stmt>
         |   [NewLine] <stmt>
         |   !EMPTY
 
